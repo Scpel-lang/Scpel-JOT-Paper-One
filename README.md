@@ -1,3 +1,9 @@
+<div align="center">
+	<h1 style="color:#660991;">Subconscious Electronic Programming Language</h1>
+	<h2 style="color:#660991;">JOT Paper 1</h2>
+	<img src="https://scpel.org/scpel_logo.png"  width="300" height="200">
+</div>
+
 # Template directory for Scpel JOT Paper 1.
 
 This package provides the LaTeX files necessary to typeset the first paper of Scpel for submission to the [Journal of Object Technology (JOT)](http://www.jot.fm).
