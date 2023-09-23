@@ -1,0 +1,14 @@
+*.aux
+*.log
+*.out
+*.blg
+*.command
+*.webloc
+*/.auctex
+templates
+jot-latex
+jot-latex.zip
+jot-latex-template
+jot-latex-template.zip
+jot/jot-manual.pdf
+jot/paper-template.pdf

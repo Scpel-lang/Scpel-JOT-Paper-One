@@ -1,8 +1,8 @@
 % $Id$
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{jot}[%
-    2010/05/01 0.1
-    (c) 2010 Damien Pollet, Inria / Univ. Lille 1, France
+    2018/06/30 0.2
+    (c) 2010-2018 Damien Pollet, Inria / Univ. Lille 1, France
 ]
 
 \ProcessOptions\relax
@@ -44,13 +44,13 @@
 
 %%%% Publication information
 
-\newcommand\jot@doiderefaddress{http://dx.doi.org/}
+\newcommand\jot@doiderefaddress{https://doi.org/}
 \newcommand\jot@doijournalprefix{10.5381}
 \newcommand\jot@articledoiaddress{\jot@doiderefaddress\jot@doi}
 \newcommand\jot@journaldoiaddress{\jot@doiderefaddress\jot@journaldoi} % not used
 \newcommand\jot@journalname{Journal of Object Technology}
-\newcommand\jot@journaladdress{http://www.jot.fm/}
-\newcommand{\jot@cclicenseurl}{http://creativecommons.org/licenses/by/4.0/}
+\newcommand\jot@journaladdress{http://www.jot.fm}
+\newcommand{\jot@cclicenseurl}{http://creativecommons.org/licenses/by/3.0/}
 \newcommand{\jot@publisher}{AITO --- Association Internationale pour les Technologies Objets}
 \newcommand{\jot@copyright}{\copyright\,JOT 2011}
 \newcommand{\jot@licenseurl}{\jot@journaladdress/copyright.html}
@@ -63,7 +63,6 @@
 \let\jot@received\@empty
 \let\jot@published\@empty
 \let\jot@revised\@empty
-\let\jot@license\@empty
 \newcommand{\jot@declaredfirstpage}{1}
 \let\jot@doi\@empty
 \newcommand{\jot@url}{\jot@journaladdress}
@@ -76,7 +75,6 @@
 \define@key{jot@details@keys}{received}{\renewcommand{\jot@received}{#1}}
 \define@key{jot@details@keys}{published}{\renewcommand{\jot@published}{#1}}
 \define@key{jot@details@keys}{revised}{\renewcommand{\jot@revised}{#1}}
-\define@key{jot@details@keys}{license}{\renewcommand{\jot@license}{#1}}
 \define@key{jot@details@keys}{firstpage}{\renewcommand{\jot@declaredfirstpage}{#1}}
 \define@key{jot@details@keys}{doi}{\renewcommand{\jot@doi}{#1}}
 \define@key{jot@details@keys}{doisuffix}{\renewcommand{\jot@doi}{\jot@doijournalprefix/#1}}
@@ -137,30 +135,6 @@
 \define@key{jot@author@keys}{affiliation}[\@empty]{\jot@tmp@aff\expandafter{#1}}
 \define@key{jot@author@keys}{photo}[\@empty]{\jot@tmp@pic\expandafter{#1}}
 \define@key{jot@author@keys}{nowrap}[true]{\csname jot@authorbio@nowrap#1\endcsname}
-
-% Handle CC licensing
-\newcommand{\jot@ccby}{ccby}
-\newcommand{\jot@ccbynd}{ccbynd}
-\newcommand{\jot@ccbyncnd}{ccbyncnd}
-\newcommand\jot@expandedlicense{%
-    \ifx\jot@license\@empty%
-      \ClassWarning{jot.cls}{No license specified.}%
-    \else%
-      \ifx\jot@license\jot@ccby%
-        \href{http://creativecommons.org/licenses/by/4.0/}{Attribution 4.0 International (CC BY 4.0)}%
-      \else%
-        \ifx\jot@license\jot@ccbynd%
-          \href{http://creativecommons.org/licenses/by-nd/4.0/}{Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)}%
-        \else%
-          \ifx\jot@license\jot@ccbyncnd%
-            \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)}%
-          \else%
-            \ClassWarning{jot.cls}{Unknown license specified.}%
-          Unknown license.%
-          \fi%
-        \fi%
-      \fi%
-    \fi}
 
 % declare an author: \author[photo=...,affiliation=...]{name}{bio}
 \let\orig@author\author % original \author setter, for layout
@@ -278,7 +252,6 @@
             \let\\\relax
             \jot@authors.\quad
             \emph{\jot@title}.\quad
-            Licensed under \jot@expandedlicense.\quad
             In \jot@runningcitation, pages~\jot@pageprefix\jot@firstpage--\jot@lastpage.\quad
             \jot@doiorurlhref
         \end{minipage}%
@@ -355,9 +328,6 @@
 %% short way to typeset \and for headers & metadata
 \def\running@and{, }
 
-\def\@mysplit#1/#2\@nil{%
-  \rlap{\hskip0.1ex\setkeys{jot@affiliation@keys}{#1}}
-  \ifx#2\@empty\else\rlap{\hskip0.2ex\raisebox{0.4em}{\footnotesize ,}\hskip0.2ex\setkeys{jot@affiliation@keys}{#2}}\fi}
 \newcommand\jot@name@author[4]{#2}
 \newcommand\jot@format@author[4]{% id, name, affiliations, bio
     \ifx #4\relax % meh, {} is not \@empty ??
@@ -449,8 +419,8 @@
                     % \raisebox{.8ex-.5\height}{\includegraphics[height=.8\baselineskip]{jot-umlsquare}}\quad
                     \null\rmfamily\caps\jot@journalname}\\
                 \smallskip
-                \small\sffamily Published by \jot@publisher\\
-                \url{\jot@journaladdress}
+                \small\sffamily Published by \jot@publisher, \href{\jot@licenseurl}{\jot@copyright}\\
+                Online at \url{\jot@journaladdress}.
                 }}}}}%
     \null
     \vskip 3em%
@@ -501,6 +471,9 @@
         pdfauthor=\jot@runningauthor,
         pdftitle=\jot@runningtitle,
         pdfsubject=\jot@journalname,
+        % pdfkeywords=xxx,
+        % pdfcopyright={This document is licensed under a Creative Commons Attribution 3.0 license},
+        % pdflicenseurl={\jot@cclicenseurl}
     }%
     \date{}% should customize \maketitle
     \maketitle
