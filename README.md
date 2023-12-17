@@ -1,7 +1,7 @@
 <div align="center">
 	<h1 style="color:#660991;">Subconscious Electronic Programming Language</h1>
 	<h2 style="color:#660991;">JOT Paper 1</h2>
-	<img src="https://scpel.org/scpel_logo.png"  width="300" height="200">
+	<img src="https://scpel.org/scpel_logo.png"  width="300" height="300">
 </div>
 
 # Template directory for Scpel JOT Paper 1.
